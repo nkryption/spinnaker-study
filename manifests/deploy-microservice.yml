@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: spare-drain-pa-microservice
+        app: spare-drain-microservice
         stack: frontend
         source: demo
-    name: spare-drain-pa-microservice
+    name: spare-drain-microservice
     namespace: microservices
 spec:
     replicas: 5
     selector:
         matchLabels:
-            run: spare-drain-pa-microservice
+            run: spare-drain-microservice
     template:
         metadata:
             labels:
-                app: spare-drain-pa-microservice
-                run: spare-drain-pa-microservice
+                app: spare-drain-microservice
+                run: spare-drain-microservice
                 source: demo
         spec:
             containers:
                 -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/spare-drain-microservice
-                    name: spare-drain-pa-microservice
+                    name: spare-drain-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,14 +31,14 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: spare-drain-pa-microservice-service
+        app: spare-drain-microservice-service
         stack: frontend
-    name: spare-drain-pa-microservice-service
+    name: spare-drain-microservice-service
     namespace: microservices
 spec:
     selector:
         source: demo
-        app: spare-drain-pa-microservice
+        app: spare-drain-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -54,7 +54,7 @@ metadata:
         stack: frontend
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: spare-drain-pa-ingress
+    name: spare-drain-ingress
     namespace: microservices
 spec:
     ingressClassName: nginx
@@ -62,10 +62,10 @@ spec:
         -   http:
                 paths:
                     -  pathType: Prefix 
-                       path: /spare-drain-pa(/|$)(.*)
+                       path: /spare-drain(/|$)(.*)
                        backend:
                           service:
-                            name: spare-drain-pa-microservice-service
+                            name: spare-drain-microservice-service
                             port: 
                                number: 30201
 
