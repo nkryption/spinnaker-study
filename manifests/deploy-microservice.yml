@@ -50,20 +50,22 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+    labels:
+        stack: frontend
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: spare-drain-ingress-canary
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+    name: spare-drain-ingress
     namespace: microservices
 spec:
+    ingressClassName: nginx
     rules:
         -   http:
                 paths:
-                    -   path: /spare-drain/canary(/|$)(.*)
-                        pathType: Prefix
-                        backend:
-                            service:
-                                name: spare-drain-microservice-service-canary
-                                port:
-                                    number: 30201 
-
+                    -  pathType: Prefix 
+                       path: /spare-drain(/|$)(.*)
+                       backend:
+                          service:
+                            name: spare-drain-microservice-service
+                            port: 
+                               number: 30201
 
